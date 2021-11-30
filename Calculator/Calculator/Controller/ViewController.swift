@@ -46,7 +46,7 @@ extension ViewController {
     }
     
     @IBAction private func operatorDidTap(_ sender: UIButton) {
-        if operand == initializeToEmptyString {
+        if operand == initializeToEmptyString, fomula != "" {
             do {
                 inputedOperatorLabel.text = try operators(for: sender)
                 return
@@ -79,7 +79,11 @@ extension ViewController {
         }
         
         operand = String(doubleOperand * -1)
-        inputedOperandLabel.text = operand
+        do {
+            inputedOperandLabel.text = try numberFormatterFor(numberForCalculate: operand)
+        } catch {
+            
+        }
     }
     
     @IBAction private func equalButtonDidTap(_ sender: UIButton) {
@@ -137,7 +141,7 @@ extension ViewController {
         stackView.spacing = stackViewSpacing
         operandLabel.textColor = .white
         operatorLabel.textColor = .white
-        
+    
         operandLabel.text = operandLabelText
         operatorLabel.text = operatorLabelText
         
@@ -205,7 +209,7 @@ extension ViewController {
         return numberFormatter.string(for: operand)
     }
     
-    private func formatNumber(of inputingOperand: String) throws -> String{
+    private func formatNumber(of inputingOperand: String) throws -> String {
         let numberFormatter = numberFormatter()
         let dotFront = inputingOperand.split(with: ".")[0]
         guard let formattedDotFront = numberFormatter.string(for: Double(dotFront)) else {

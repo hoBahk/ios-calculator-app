@@ -46,7 +46,8 @@ class CalculatorUITests: XCTestCase {
         app.buttons["0"].tap()
         app.buttons["00"].tap()
         app.buttons["."].tap()
-        
+        let bb = app.staticTexts["InputedOperandLabel"].label
+        XCTAssertEqual(bb, "123,456,789,000.")
     }
     
     func test_연산자버튼_누르면_스크롤뷰로_올라간다() {
@@ -55,6 +56,9 @@ class CalculatorUITests: XCTestCase {
         app.buttons["×"].tap()
         app.buttons["4"].tap()
         app.buttons["2"].tap()
+        app.buttons["="].tap()
+        let bb = app.staticTexts.element(matching: .any, identifier: "InputedOperandLabel").label
+        XCTAssertEqual(bb, "504")
     }
     
     func test_1_2_곱하기_4_2_이퀄_버튼을_차례대로_탭하면_504가_출력된다() {
